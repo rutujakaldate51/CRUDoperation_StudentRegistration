@@ -1,0 +1,58 @@
+{% extends 'account/base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-4">
+        <h4 class="text-center alert alert-info">Add New Student</h4>
+           <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" class="btn btn-success" value="Add">
+            </form>    
+    </div>
+
+    <div class="col-sm-8">
+        <h4 class="text-center alert alert-info">Show Student Information</h4>
+    
+    {% if stud %}  
+    <div>     
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <!-- <th scope="col">ID</th> -->
+            <th scope="col">Name</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Address</th>
+            <th scope="col">Skills</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Action</th>
+
+          </tr>
+        </thead>
+        <tbody>
+            {% for st in stud %}
+            <tr>
+                <!-- <th scope="row">{{ct.id}}</th> -->
+                <td>{{st.name}}</td>
+                <td>{{st.mobile}}</td>
+                <td>{{st.address}}</td>
+                <td>{{st.skill}}</td>
+                <td>{{st.gender}}</td>
+                <td>
+                <a href="{% url 'updatedata' st.id %}" class="btn btn-warning">Edit</a>
+                <form action="{% url 'deletedata' st.id %}" method="post" class="d-inline">{% csrf_token %}
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div> 
+    {% else %}
+        <h4 class="text-center alert alert-warning">No Records</h4>    
+    {% endif %}    
+    </div>
+</div>    
+                
+{% endblock content %}
